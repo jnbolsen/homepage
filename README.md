@@ -14,13 +14,13 @@ The following packages are installed:
 
 ## Using - Install Homepage
 1. Clone the repository in a directory of your choosing.  Usually the user home directory.
-2. Make the scrip executable, `sudo chmod +x install.sh`.
-3. Run the script, `sudo ./install.sh`
+2. Make the scrip executable by running `sudo chmod +x install.sh`.
+3. Run the script `sudo ./install.sh`.
 
 ## Using - Update Homepage
 1. Clone the repository in a directory of your choosing, if you have not already.  Usually the user home directory.
-2. Make the scrip executable, `sudo chmod +x update.sh`.
-3. Run the script, `sudo ./update.sh`
+2. Make the scrip executable by running `sudo chmod +x update.sh`.
+3. Run the script `sudo ./update.sh`.
 
 ## Configuration Directory Location
 
