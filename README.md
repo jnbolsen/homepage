@@ -15,10 +15,7 @@ The following packages are installed:
 `sudo npm install -g pnpm`
 
 ## Using - Install Homepage
-1. Clone the repository in a directory of your choosing, usually the user home directory.
-
-  git clone `https://github.com/jnbolsen/ezarr.git`
-
+1. Clone the repository in a directory of your choosing, usually the user home directory - `git clone https://github.com/jnbolsen/ezarr.git`.
 2. Make the scrip executable - `sudo chmod +x install.sh`.
 3. Run the script - `sudo ./install.sh`.
 
