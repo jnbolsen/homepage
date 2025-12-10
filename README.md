@@ -1,5 +1,5 @@
 # Homepage
-This is a script to install and update homepage. It is similar to [ttek's homepage lxc scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=homepage), tailored for my personal use.
+These are scripts to install and update homepage. They are similar to [ttek's homepage lxc scripts](https://community-scripts.github.io/ProxmoxVE/scripts?id=homepage), tailored for my personal use.
 
 ## Prerequisites
 Below packages are installed:
