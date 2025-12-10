@@ -9,6 +9,7 @@ Below packages are installed:
 - curl
 
 `sudo apt install curl node.js npm`
+
 `sudo npm install -g pnpm`
 
 ## To install homepage from source
