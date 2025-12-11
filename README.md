@@ -17,7 +17,7 @@ The following packages are installed:
 ## Usage - Install Homepage
 Download `install.sh`.
 
-wget -O install.sh 
+`wget -O install.sh https://github.com/jnbolsen/homepage-scripts/blob/main/install.sh`
 
 Make the scrip executable.
 
@@ -30,7 +30,7 @@ Run the script.
 ## Usage - Update Homepage
 Download `update.sh`.
 
-wget -O update.sh 
+`wget -O update.sh https://github.com/jnbolsen/homepage-scripts/blob/main/update.sh`
 
 Make the scrip executable.
 
