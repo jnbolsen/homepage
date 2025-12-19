@@ -1,7 +1,7 @@
-# Homepage Install and Update Scripts
+# Homepage install and update scripts
 These are scripts to easily install and update [Homepage](https://gethomepage.dev/installation/) from source.
 
-Right now these are set to be verbose but can be changed by removing `-x` at the top of each script.
+Right now these are set to be verbose but can be changed by removing `-x` from `#!/bin/bash -x`.
 
 ## Requirements
 The following packages are installed:
@@ -56,11 +56,11 @@ Run the script.
 sudo ./update.sh
 ```
 
-## Configuration Directory Location
+## Configuration directory location
 
 `/opt/homepage/config/`
 
-## Tested Environments
+## Tested environments
 Ubuntu 22.04, 24.04, and 25.10 <br />
 Debian 12 and 13
 
