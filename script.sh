@@ -108,17 +108,17 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# Move extracted files to installation directory
+# Copy extracted files to installation directory
 msg_info "Installing files..."
-mv /tmp/homepage-${RELEASE}/* /opt/${APP}/
+cp -r /tmp/${APP}-${RELEASE}/* /opt/${APP}/
 if [ $? -ne 0 ]; then
     msg_error "Failed to move installation files"
-    rm -rf /tmp/homepage-${RELEASE}
+    rm -rf /tmp/${APP}-${RELEASE}
     exit 1
 fi
 
 # Cleanup
-rm -rf /tmp/homepage-${RELEASE} /tmp/${RELEASE}.tar.gz
+rm -rf /tmp/${APP}-${RELEASE} /tmp/${RELEASE}.tar.gz
 
 # Copy skeleton files only for new installations
 if [ "$NEW_INSTALLATION" = true ]; then
@@ -129,30 +129,26 @@ if [ "$NEW_INSTALLATION" = true ]; then
     
     # Create environment file only for new installations
     msg_info "Creating environment file..."
-    cat > /opt/${APP}/.env <<EOF
-HOMEPAGE_ALLOWED_HOSTS=localhost,${LOCAL_IP}
-HOMEPAGE_ALLOWED_ORIGINS=http://localhost:3000,http://${LOCAL_IP}:3000
-EOF
+    touch /opt/${APP}/.env
+    echo "HOMEPAGE_ALLOWED_HOSTS=localhost:3000,${LOCAL_IP}:3000,homepage.home.jnbolsen.com:3000" >/opt/${APP}/.env
     
     # Create systemd service only for new installations
     msg_info "Creating systemd service..."
-    cat <<EOF >/etc/systemd/system/${APP}.service
-[Unit]
-Description=${APP}
-After=network.target
-
-[Service]
-Type=simple
-User=root
-WorkingDirectory=/opt/${APP}
-ExecStart=/usr/bin/pnpm start
-Restart=always
-RestartSec=10
-Environment=NODE_ENV=production
-
-[Install]
-WantedBy=multi-user.target
-EOF
+    cat <<EOF >/etc/systemd/system/homepage.service
+    [Unit]
+    Description=${APP}  
+    After=network.target
+    StartLimitIntervalSec=0
+    [Service]
+    Type=simple
+    Restart=always
+    RestartSec=1
+    User=root
+    WorkingDirectory=/opt/${APP}/
+    ExecStart=pnpm start
+    [Install]
+    WantedBy=multi-user.target
+    EOF
 fi
 
 # Install dependencies and build
@@ -164,7 +160,7 @@ msg_info "Building application..."
 pnpm build
 
 # Create version file
-echo "${RELEASE}" > "$VERSION_FILE"
+echo "${RELEASE}" > $VERSION_FILE
 
 msg_ok "Successfully installed ${APP} v${RELEASE}!"
 
@@ -175,6 +171,8 @@ if [ "$NEW_INSTALLATION" = true ]; then
     systemctl enable ${APP}
     systemctl start ${APP}
     msg_ok "Service ${APP} started successfully!"
+else
+    msg_info "Restarting service..."
+    systemctl restart ${APP}
+    msg_ok "Service ${APP} started successfully!"
 fi
-
-msg_info "Installation completed successfully!"
