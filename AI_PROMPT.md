@@ -1,38 +1,69 @@
-# AI Prompt
+# AI prompt
 This file provides guidance to an AI model when working with code in this repository.
 
-## Repository overview
-This repository contains a script that installs and updates Homepage from source.
+## Script purpose
+This script automates the installation or update of Homepage, a self-hosted startpage/dashboard for your server, by downloading the latest release from GitHub, building it, and setting it up with systemd.
 
-<https://github.com/jnbolsen/homepage-scripts>
-
-### Variables
-- `APP`: homepage.
-- `LOCAL_IP`: Local IPv4 address of machine.
-- `RELEASE`: Latest release version, pulled from the Homepage Github repository.
-- `VERSION_FILE`: Location of version file, where current version installed is listed.
-- `INSTALLED_VERSION`: Current version of Homepage, pulled from `VERSION_FILE`.
-- `NEW_INSTALLATION`: True = new installation, false = update existing installation.
+## Variables used
+- `APP`: Name of the application, pulled from machine hostname (homepage)
+- `LOCAL_IP`: Local IPv4 address of the machine
+- `RELEASE`: Latest Github release tag for Homepage
+- `VERSION_FILE`: Path to file storing the currently installed version
+- `INSTALLED_VERSION`: Current version read from `VERSION_FILE`
+- `NEW_INSTALLATION`: Boolean flag indicating if this is a new install
 
 ## Directories
 - Installation directory: `/opt/homepage`
 - Working directory: `/tmp`
-- Version file location: `/opt`
+- Location of version file: `/opt`
 
 ## Script summary
-- Set variables `APP`, `LOCAL_IP`, and `RELEASE`.
-- Checks if `RELEASE` variable was fetched correctly, `LOCAL_IP` variable was fetched correctly, script is running as root, curl is installed, and npm is installed.
-- Checks for the presence of `VERSION_FILE`. If it does not exist, proceed as a new installation. If it exists and does not match current release, proceed as update. If it exists and matches current release, exit.
-- Updates packages, upgrades packages, and updates pnpm (or installs if not present).
-- Downloads source code from the Hopeage Github repository using `RELEASE` tag and places it in `/tmp`.
-- Extracts the source code in `/tmp`.
-- Copies extracted directory from `/tmp` to `/opt/{$APP}`.
-- Cleans up `/tmp`.
-- Does the following if it is a new installation, otherwise skip for update only.
-  - Copy `/opt/${APP}/src/skeleton/*` to the config directory `/opt/${APP}/config/`. The files in `/src/skeleton` are default configuration files. Do not copy these to the config directory if there is an existing install, as it is assumed that config files are already present.
-  - Create and populate environment file `.env` with allowed hosts using variable `HOMEPAGE_ALLOWED_HOSTS`. Do not create this if there is an existing install, as it is assumed to already be created.
-  - Create a systemd service `${APP}.service`. Do not create this if there is an existing install, as it is assumed to already be created.
-- Install dependencies with pnpm.
-- Build with pnpm.
+1. Set Initial Variables
+   - Define `APP`, `LOCAL_IP`, and fetch latest `RELEASE` from GitHub.
+2. Validation Checks
+   - Ensure `RELEASE` and `LOCAL_IP` are valid.
+   - Check that script runs as root.
+   - Confirm `curl` and `npm` are installed.
+3. Determine Installation Type
+   - If `VERSION_FILE` does not exist → new installation.
+   - If `VERSION_FILE` exists but doesn't match `RELEASE` → update.
+   - If version matches → exit (no action needed).
+4. System Preparation
+   - Update system packages.
+   - Upgrade `pnpm` (install if missing).
+5. Download & Extract Source
+   - Download latest release tarball using GitHub API.
+   - Extract into `/tmp`.
+6. Copy Files to Install Location
+   - Move extracted source to `/opt/homepage`.
+7. Cleanup
+   - Remove temporary files in `/tmp`.
+8. New Installation Steps Only
+   - Copy skeleton config files from `src/skeleton` to `config/`.
+   - Create `.env` file with `HOMEPAGE_ALLOWED_HOSTS` variable.
+   - Set up systemd service file.
+9. Build & Install Dependencies
+   - Run `pnpm install`.
+   - Run `pnpm build`.
+10. Finalize
+    - Write new version to `VERSION_FILE`.
+    - Reload systemd daemon.
+    - For new installs:
+      - Enable and start the service.
+    - For updates:
+      - Restart the service only.
+
+## Key features implemented
+- Idempotent behavior: Won't reinstall if already up-to-date.
+- Supports both fresh install and updates.
+- Uses pnpm for dependency management.
+- Automatically sets up systemd service.
+- Handles cleanup and configuration appropriately.
+
+## Notes
+- The script assumes curl, npm, and pnpm are available.
+- It uses systemd for service management.
+- Config files and environment variables are preserved during updates.
+- This approach ensures consistent, reproducible deployments of Homepage.
 - Create and populate version file with new release version.
 - Reload systemd and enable the service only for new installations, otherwise restart the service only.
