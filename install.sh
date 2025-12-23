@@ -40,6 +40,7 @@ if [ -f $VERSION_FILE ]; then
 else
     NEW_INSTALLATION=true
     msg_ok "No Homepage installation detected. Installing..."
+    mkdir -p /opt/${APP}/config
 fi
 
 # Update system and install pnpm
