@@ -9,6 +9,7 @@ This script automates the installation or update of Homepage, a self-hosted star
 - `LOCAL_IP`: Local IPv4 address of the machine
 - `RELEASE`: Latest Github release tag for Homepage
 - `VERSION_FILE`: Path to file storing the currently installed version
+- `DOMAIN`: Internal network domain, if available
 - `INSTALLED_VERSION`: Current version read from `VERSION_FILE`
 - `NEW_INSTALLATION`: Boolean flag indicating if this is a new install
 
@@ -40,7 +41,7 @@ This script automates the installation or update of Homepage, a self-hosted star
    - Remove temporary files in `/tmp`.
 8. New Installation Steps Only
    - Copy skeleton config files from `src/skeleton` to `config/`.
-   - Create `.env` file with `HOMEPAGE_ALLOWED_HOSTS` variable.
+   - Create `.env` file with `HOMEPAGE_ALLOWED_HOSTS` variable, which adds `LOCAL_IP`:3000 and `APP`.`DOMAIN`:3000.
    - Set up systemd service file.
 9. Build & Install Dependencies
    - Run `pnpm install`.
