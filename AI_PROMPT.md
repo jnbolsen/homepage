@@ -35,7 +35,7 @@ This script automates the installation or update of Homepage, a self-hosted star
 5. Download and extract source
    - Download latest release tarball using GitHub API into `/tmp`.
    - Extract.
-6. Copy files to install directory and clean up
+6. Copy files to install directory and cleanup
    - Copy extracted source to `/opt/homepage`.
    - Remove download and extracted files in `/tmp`.
 7. New installation steps only
