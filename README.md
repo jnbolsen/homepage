@@ -1,5 +1,5 @@
 # Homepage install and update script
-This script installs [Homepage](https://gethomepage.dev/installation/source/) from source, or updates from source if it is already installed and a newer version is available. See [`AI_PROMPT.md`](https://github.com/jnbolsen/homepage-install-script/edit/main/AI_PROMPT.md) for more detail on what the script does.
+This script installs [Homepage](https://gethomepage.dev/installation/source/) from source, or updates from source if it is already installed and a newer version is available. See [`AI_PROMPT.md`](https://github.com/jnbolsen/homepage-install-script/blob/main/AI_PROMPT.md) for more detail on what the script does.
 
 > [!NOTE]
 > The script installs dependencies and builds using pnpm [as recommended](https://gethomepage.dev/installation/source/). The latest verison is installed globally using npm.
